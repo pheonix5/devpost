@@ -50,7 +50,7 @@ export default function NewPost(){
       created: new Date(),
       content: post,
       autor: user?.nome,
-      userid: user?.uid,
+      userId: user?.uid,
       likes: 0,
       avatarUrl,
     })

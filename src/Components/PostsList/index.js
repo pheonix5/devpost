@@ -20,7 +20,7 @@ import firestore from '@react-native-firebase/firestore'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export default function PostList({ data, userid }){
+export default function PostList({ data, userId }){
   const navigation = useNavigation();
   const [likesPost, setLikesPost] = useState(data?.likes)
 
@@ -81,7 +81,7 @@ export default function PostList({ data, userid }){
 
   return(
     <Container>
-      <Header onPress={() => navigation.navigate("PostsUser", { title: data.autor, userId: data.userid })}>
+      <Header onPress={() => navigation.navigate("PostsUser", { title: data.autor, userId: data.userId })}>
 
         { data.avatarUrl ? (
           <Avatar 

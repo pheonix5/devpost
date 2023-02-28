@@ -147,7 +147,7 @@ export default function Home(){
           renderItem={ ({ item }) => ( 
             <PostList 
               data={item}
-              userid={user?.uid}
+              userId={user?.uid}
             />
            )}
 

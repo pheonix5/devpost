@@ -1,11 +1,20 @@
-import React, { useLayoutEffect, useState, useCallback } from "react";
-import { View, Text } from 'react-native'
+import React, { useLayoutEffect, useState, useCallback, useContext } from "react";
+import { View, ActivityIndicator } from 'react-native'
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native'
 
 import firestore from '@react-native-firebase/firestore'
-import { ro } from "date-fns/locale";
+import { AuthContext } from '../../Contexts/auth'
+
+import PostList from "../../Components/PostsList";
+
+import {
+  Container,
+  ListPosts
+} from './styles'
+
 
 export default function PostsUser(){
+  const { user } = useContext(AuthContext);
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -18,7 +27,10 @@ export default function PostsUser(){
       title: title === '' ? '' : title
     })
 
-  },[navigation, title])
+  },[navigation, title]);
+
+  console.log(route.params?.userId);
+
 
   useFocusEffect(
     useCallback(() => {
@@ -26,7 +38,7 @@ export default function PostsUser(){
 
       firestore()
       .collection('posts')
-      .where('userid', '==', route.params?.userId)
+      .where('userId', '==', route.params?.userId)
       .orderBy('created', 'desc')
       .get()
       .then((snapshot) => {
@@ -41,8 +53,8 @@ export default function PostsUser(){
 
         if(isActive){
           setPosts(postList);
-          console.log(postList);
-          setLoading(false)
+          console.log(route.params?.userId);
+          setLoading(false);
         }
 
       })
@@ -55,9 +67,19 @@ export default function PostsUser(){
   )
 
   return(
-    <View>
-      <Text>{route?.params?.title}</Text>
-    </View>
+    <Container>
+      { loading ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size={50} color="#E52246"/>
+        </View>
+      ) : (
+        <ListPosts
+          showsVerticalScrollIndicator={false}
+          data={posts}
+          renderItem={ ({ item }) =>  <PostList data={item} userId={user?.uid}/> }
+        />
+      ) }
+    </Container>
   )
 }
 
