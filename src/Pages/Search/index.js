@@ -2,6 +2,8 @@ import React , { useState, useEffect }from "react";
 import { View, Text } from 'react-native'
 import firestore from '@react-native-firebase/firestore'
 
+import SearchList from '../../Components/SearchList'
+
 import {
   Container,
   AreaInput,
@@ -60,6 +62,11 @@ export default function Search(){
           placeholderTextColor="#353840"
         />
       </AreaInput>
+
+      <List 
+        data={users}
+        renderItem={ ({item}) => <SearchList  data={item}/>}
+      />
     </Container>
   )
 }

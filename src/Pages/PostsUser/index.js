@@ -29,7 +29,6 @@ export default function PostsUser(){
 
   },[navigation, title]);
 
-  console.log(route.params?.userId);
 
 
   useFocusEffect(
@@ -53,7 +52,6 @@ export default function PostsUser(){
 
         if(isActive){
           setPosts(postList);
-          console.log(route.params?.userId);
           setLoading(false);
         }
 
