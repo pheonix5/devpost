@@ -33,11 +33,14 @@ export default function Profile(){
 
 
   useEffect( () => {
+    let isActive = true;
 
     async function loadAvatar(){
       try{
-        let response = await storage().ref('users').child(user?.uid).getDownloadURL();
-        setUrl(response);
+        if(isActive){
+          let response = await storage().ref('users').child(user?.uid).getDownloadURL();
+          setUrl(response);
+        }
       }catch(err){
         console.log("Não encontramos nenhuma foto");
       }
@@ -45,7 +48,7 @@ export default function Profile(){
 
     loadAvatar();
 
-    return () => loadAvatar();
+    return () => isActive = false;
   }, [] )
 
 
